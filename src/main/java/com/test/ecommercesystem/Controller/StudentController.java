@@ -1,7 +1,7 @@
-package com.test.studentsystem.Controller;
+package com.test.ecommercesystem.Controller;
 
-import com.test.studentsystem.model.Student;
-import com.test.studentsystem.service.StudentService;
+import com.test.ecommercesystem.model.Student;
+import com.test.ecommercesystem.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/student")
+@CrossOrigin (origins = "http://localhost:3000")
 
 public class StudentController {
     @Autowired
@@ -24,4 +25,5 @@ public class StudentController {
     public List<Student> getAllStudents(){
         return studentService.getAllStudents();
     }
+
 }

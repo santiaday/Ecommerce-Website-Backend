@@ -1,6 +1,6 @@
-package com.test.studentsystem.repository;
+package com.test.ecommercesystem.repository;
 
-import com.test.studentsystem.model.Student;
+import com.test.ecommercesystem.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

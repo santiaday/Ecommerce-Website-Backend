@@ -1,9 +1,9 @@
-package com.test.studentsystem.service;
+package com.test.ecommercesystem.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.test.studentsystem.repository.StudentRepo;
-import com.test.studentsystem.model.Student;
+import com.test.ecommercesystem.repository.StudentRepo;
+import com.test.ecommercesystem.model.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

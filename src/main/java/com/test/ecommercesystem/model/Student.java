@@ -1,4 +1,4 @@
-package com.test.studentsystem.model;
+package com.test.ecommercesystem.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
