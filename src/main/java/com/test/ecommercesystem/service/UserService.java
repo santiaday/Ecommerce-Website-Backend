@@ -13,4 +13,6 @@ public interface UserService {
 
     public int checkCreateUser(User user);
 
+    public int authorizeUser(String token);
+
 }

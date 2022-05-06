@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.test.ecommercesystem.Controller.UserController.checkExpiration;
+import static com.test.ecommercesystem.Controller.UserController.getCurrentDate;
+
 @Service
 public class UserServiceImplementation implements UserService{
 
@@ -61,5 +64,36 @@ public class UserServiceImplementation implements UserService{
         }
         return 1;
     }
+
+    @Override
+        public int authorizeUser (@RequestBody String token){
+            System.out.println("phase 1");
+            List<User> userList = new ArrayList<>();
+            userList = userRepo.findAll();
+            long current = getCurrentDate();
+            current = current/1000000;
+            System.out.println("phase 2");
+
+
+            for(User u: userList){
+                if(u.getConfirmToken().equals(token)){
+                    long expiration = u.getExpirationMinutes();
+                    if(checkExpiration(current, expiration) == false) {
+                        System.out.println("phase 4");
+                        u.setConfirmToken("");
+                        u.setEnabled(1);
+                        return 1;
+                    }else {
+                        u.setConfirmToken("");
+                        return -1;
+                    }
+                }else{
+                    return -2;
+                }
+            }
+
+            return -1;
+        }
+
 
 }

@@ -1,5 +1,8 @@
 package com.test.ecommercesystem.model;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +16,34 @@ public class User {
     private String name;
     private String email;
     private String username;
+    private int enabled;
+    private String confirmToken;
+    private long expirationMinutes;
+
+    public String getConfirmToken() {
+        return confirmToken;
+    }
+
+    public long getExpirationMinutes() {
+        return expirationMinutes;
+    }
+
+    public void setExpirationMinutes(long expirationMinutes) {
+        this.expirationMinutes = expirationMinutes;
+    }
+
+
+    public void setConfirmToken(String confirmToken) {
+        this.confirmToken = confirmToken;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
 
     public String getName() {
         return name;
