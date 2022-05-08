@@ -18,7 +18,27 @@ public class User {
     private String username;
     private int enabled;
     private String confirmToken;
+
+    public String getPasswordToken() {
+        return passwordToken;
+    }
+
+    public void setPasswordToken(String passwordToken) {
+        this.passwordToken = passwordToken;
+    }
+
+    public long getPasswordExpirationMinutes() {
+        return passwordExpirationMinutes;
+    }
+
+    public void setPasswordExpirationMinutes(long passwordExpirationMinutes) {
+        this.passwordExpirationMinutes = passwordExpirationMinutes;
+    }
+
     private long expirationMinutes;
+
+    public String passwordToken;
+    public long passwordExpirationMinutes;
 
     public String getConfirmToken() {
         return confirmToken;

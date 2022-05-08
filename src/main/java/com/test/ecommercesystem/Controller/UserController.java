@@ -70,7 +70,7 @@ public class UserController {
         try {
             emailSenderService.sendSimpleEmail(
                     user.getEmail(),
-                    "<html><body><img src='cid:attachment'><br><br><span style=\"font-size:12px;\">Thank you for joining Excellent Store Inc.! Please follow this link to activate your account." + link + "</span></body></html>",
+                    "<html><body><img src='cid:attachment'><br><br><span style=\"font-size:12px;\">Thank you for joining Excellent Store Inc.! Please follow this link to activate your account.<br><br>" + link + "</span></body></html>",
                     "Email Confirmation Link"
             );
         }catch (MessagingException e){
@@ -94,14 +94,15 @@ public class UserController {
         userList = userService.getAllUsers();
 
         for(User u:userList){
-            if(u.getEmail().equals(email)) {
+            String uEmail = "\"" + u.getEmail() + "\"";
+            if(uEmail.equals(email)) {
                 String token = generateToken(25);
                 String link = "http://localhost:3000/password-reset-token=" + token;
 
                 try {
                     emailSenderService.sendSimpleEmail(
                             email,
-                            "<html><body><img src='cid:attachment'><br><br><span style=\"font-size:12px;\">Thank you for joining Excellent Store Inc.! Please follow this link to reset your password." + link + "</span></body></html>",
+                            "<html><body><img src='cid:attachment'><br><br><span style=\"font-size:12px, color:black\">Thank you for joining Excellent Store Inc.! Please follow this link to reset your password.<br><br>" + link + "</span></body></html>",
                             "Password Reset Link"
                     );
                 } catch (MessagingException e) {
@@ -111,12 +112,13 @@ public class UserController {
                 long currentS = getCurrentDate();
                 long expiration = getExpirationDate(currentS);
 
-                u.setConfirmToken(token);
-                u.setExpirationMinutes(expiration);
+                u.setPasswordToken(token);
+                u.setPasswordExpirationMinutes(expiration);
                 userService.saveUser(u);
 
-
                 return 1;
+            }else{
+                return -1;
             }
         }
 
@@ -125,19 +127,18 @@ public class UserController {
 
     @PostMapping("/updateEnabledUser")
     public void updateEnabledUser (@RequestBody UserToken userToken){
-        System.out.println(userToken.getToken());
-        System.out.println(userToken.getResult());
 
         List<User> userList = new ArrayList<>();
         userList = userService.getAllUsers();
 
         for(User u:userList){
 
-            if(u.getConfirmToken().equals(userToken.getToken()) || userToken.getResult() == 1){
+            if(u.getConfirmToken().equals(userToken.getToken()) && userToken.getResult() == 1){
                 u.setConfirmToken("");
                 u.setEnabled(1);
+                u.setExpirationMinutes(0);
                 userRepo.save(u);
-            }else if(u.getConfirmToken().equals(userToken.getToken()) || userToken.getResult() == 1){
+            }else if(u.getConfirmToken().equals(userToken.getToken()) && userToken.getResult() == 0){
                 u.setConfirmToken("");
                 userRepo.save(u);
             }
